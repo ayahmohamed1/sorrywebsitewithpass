@@ -6,7 +6,7 @@ import NotFound from '@/components/NotFound'
 
 export default function GiftPage() {
   const { id } = useParams<{ id: string }>()
-  const safeId = (id || '').toLowerCase()
+  const safeId = (id || 'aya').toLowerCase()
   const data = id ? giftData[safeId] : (giftData['aya'] || Object.values(giftData)[0])
 
   useEffect(() => {
