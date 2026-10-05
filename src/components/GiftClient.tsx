@@ -12,15 +12,15 @@ export default function GiftClient({ data }: Props) {
   const [, setLoading] = useState(true)
   const [screen, setScreen] = useState<ScreenType>('lock')
   const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null)
-  
+
   // Passcode Lock State
   const [passcodeInput, setPasscodeInput] = useState('')
   const [isPassError, setIsPassError] = useState(false)
-  
+
   // Global Music
   const [musicPlaying, setMusicPlaying] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null)
-  
+
   // --- Song Player State ---
   const [isSongPlaying, setIsSongPlaying] = useState(false)
   const [songProgress, setSongProgress] = useState(0)
@@ -34,8 +34,8 @@ export default function GiftClient({ data }: Props) {
 
   const [noCount, setNoCount] = useState(0)
 
-  const photosList = data.photos && data.photos.length > 0 
-    ? data.photos 
+  const photosList = data.photos && data.photos.length > 0
+    ? data.photos
     : ['/images/pic1.jpg', '/images/pic2.jpg', '/images/pic3.jpg', '/images/pic4.jpg']
 
   const songTitle = data.songTitle || 'Our Special Song'
@@ -61,7 +61,7 @@ export default function GiftClient({ data }: Props) {
   const navigateTo = useCallback((newScreen: ScreenType) => {
     window.history.pushState({ screen: newScreen }, '')
     setScreen(newScreen)
-    
+
     // إيقاف الأغنية لو مش في صفحتها
     if (newScreen !== 'song' && isSongPlaying && songAudioRef.current) {
       songAudioRef.current.pause()
@@ -199,7 +199,7 @@ export default function GiftClient({ data }: Props) {
   return (
     <div className="gift-page">
       <FloatingHearts />
-      
+
       <div className="corners-overlay">
         <div className="corner tl"></div>
         <div className="corner tr"></div>
@@ -253,7 +253,7 @@ export default function GiftClient({ data }: Props) {
         <div className="content-wrapper center-content">
           <p className="subtitle">✦ Just a simple question ✦</p>
           <h1 className="gift-title">Will you forgive me?</h1>
-          
+
           <div className="heart-sticker-wrapper">
             <div className="heart-sticker-aura"></div>
             <div
@@ -265,7 +265,7 @@ export default function GiftClient({ data }: Props) {
                     spread: 60,
                     origin: { y: 0.5 }
                   })
-                } catch {}
+                } catch { }
               }}
               title="❣️"
             >
@@ -277,14 +277,15 @@ export default function GiftClient({ data }: Props) {
             <button
               className="btn-primary"
               style={{
-                fontSize: `${1 + noCount * 0.1}rem`,
-                padding: `${0.8 + noCount * 0.08}rem ${2 + noCount * 0.15}rem`
+                fontSize: `${1 + noCount * 0.12}rem`,
+                padding: `${0.8 + noCount * 0.08}rem ${2 + noCount * 0.18}rem`
               }}
               onClick={handleYesClick}
             >
               Yes!
             </button>
-            {noCount < 10 && (
+
+            {noCount < 7 && (
               <button
                 className="secret-link btn-no"
                 onClick={() => setNoCount((prev) => prev + 1)}
@@ -297,9 +298,6 @@ export default function GiftClient({ data }: Props) {
                   'Think again! 🥺',
                   'Don’t do this 😭',
                   'Last chance... 🥺',
-                  'Have mercy! 🥺',
-                  'Pretty please? 💖',
-                  'Just say yes! 🥹',
                 ][noCount]}
               </button>
             )}
@@ -313,7 +311,7 @@ export default function GiftClient({ data }: Props) {
           <div className="letter-card">
             <div className="top-accent-sq"></div>
             <h2 className="letter-title">To my favorite person,</h2>
-            
+
             <div className="letter-scroll-area">
               <div className="letter-body">{data.message}</div>
               <div className="letter-divider"><span>✦</span></div>
@@ -337,7 +335,7 @@ export default function GiftClient({ data }: Props) {
             <div className="top-accent-sq"></div>
             <h2 className="letter-title">Our Moments ✨</h2>
             <p className="subtitle" style={{ marginBottom: '0.4rem' }}>✦ Every picture holds a feeling ✦</p>
-            
+
             <div className="photos-grid">
               {photosList.slice(0, 4).map((imgSrc, idx) => (
                 <div
@@ -437,7 +435,7 @@ export default function GiftClient({ data }: Props) {
                 style={{ width: '100%', marginTop: '1.2rem', padding: '0.8rem 1.4rem', fontSize: '1rem' }}
                 onClick={() => navigateTo('video')}
               >
-                Next: Watch Our Video 🎥 →
+                A Moment of Ours❣️→
               </button>
             </div>
           </div>
@@ -459,9 +457,9 @@ export default function GiftClient({ data }: Props) {
             <div className="top-accent-sq"></div>
             <p className="subtitle">✦ A Special Memory ✦</p>
             <h2 className="letter-title" style={{ marginBottom: '0.8rem' }}>
-              {data.videoTitle || 'Our Video 🎥'}
+              {data.videoTitle || 'A Moment of Ours❣️'}
             </h2>
-            
+
             <div className="video-frame-container">
               <video
                 ref={videoRef}
@@ -495,7 +493,7 @@ export default function GiftClient({ data }: Props) {
                 onClick={() => {
                   try {
                     confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } })
-                  } catch {}
+                  } catch { }
                   navigateTo('letter')
                 }}
               >
@@ -569,30 +567,30 @@ function VinylSVG() {
       </defs>
       {/* Outer vinyl disc */}
       <circle cx="100" cy="100" r="98" fill="url(#vinylShine)" stroke="#374151" strokeWidth="1.5" />
-      
+
       {/* Vinyl Grooves */}
       <circle cx="100" cy="100" r="86" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
       <circle cx="100" cy="100" r="74" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
       <circle cx="100" cy="100" r="62" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
       <circle cx="100" cy="100" r="50" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-      
+
       {/* Center Label */}
       <circle cx="100" cy="100" r="34" fill="#374151" stroke="#4b5563" strokeWidth="1.5" />
       <circle cx="100" cy="100" r="28" fill="#1f2937" />
       <text x="100" y="105" textAnchor="middle" fontSize="14" fill="#9ca3af" fontFamily="sans-serif">🎵</text>
-      
+
       {/* Spindle hole */}
       <circle cx="100" cy="100" r="5" fill="#030712" stroke="#6b7280" strokeWidth="1" />
     </svg>
   )
 }
 
-function PlayIcon() { return <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> }
-function PauseIcon() { return <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg> }
-function ForwardIcon() { return <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg> }
-function BackwardIcon() { return <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg> }
-function VolumeMinIcon() { return <svg viewBox="0 0 24 24"><path d="M7 9v6h4l5 5V4l-5 5H7z"/></svg> }
-function VolumeMaxIcon() { return <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> }
+function PlayIcon() { return <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg> }
+function PauseIcon() { return <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" /></svg> }
+function ForwardIcon() { return <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z" /></svg> }
+function BackwardIcon() { return <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z" /></svg> }
+function VolumeMinIcon() { return <svg viewBox="0 0 24 24"><path d="M7 9v6h4l5 5V4l-5 5H7z" /></svg> }
+function VolumeMaxIcon() { return <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" /></svg> }
 
 function ChicHeartExclamation() {
   return (
